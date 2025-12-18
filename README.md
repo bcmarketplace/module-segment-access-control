@@ -6,6 +6,13 @@
 
 This module solves the challenge of managing complex B2B access control scenarios where customers need access to different catalog sections based on multiple organizational roles or segments, while maintaining compatibility with Magento's existing catalog permission infrastructure.
 
+**Key Capabilities:**
+- Control which categories and products customers can access based on their assigned segments
+- Link organization groups directly to company roles for streamlined permission management
+- Visual category tree makes it easy to see parent-child relationships when selecting categories
+- Automatically filter search results based on customer segment permissions
+- Support multiple segments per customer with aggregated permissions
+
 ## What Problem Does This Module Solve?
 
 ### The Challenge
@@ -134,6 +141,13 @@ The module follows a layered architecture that integrates seamlessly with Magent
 - **Infrastructure Reuse**: Leverages existing `catalogpermissions_category` and `catalogpermissions_product` tables
 - **Graceful Degradation**: Falls back to standard permissions when module disabled
 
+### 6. Organization Group Management
+- **Company Role Integration**: Link organization groups directly to company roles for streamlined access control
+- **Category Tree Selection**: Visual category tree shows parent-child relationships, making it easy to understand the catalog structure
+- **Role Supervisor Toggle**: Designate roles as admin roles with a simple toggle switch
+- **Status Control**: Enable or disable organization groups without deleting them
+- **Automatic Data Management**: Organization group data is automatically saved when company roles are saved or deleted
+
 ## Installation
 
 ### Prerequisites
@@ -240,6 +254,34 @@ Navigate to: **Stores → Configuration → Customers → Segment Management**
    - Search: Filtered to only show accessible categories
 7. **Display**: John sees only products and categories he has access to based on all his segments
 
+### Setting Up Organization Groups for Company Roles
+
+Organization groups allow you to control which categories company roles can access. This is perfect for B2B scenarios where different roles within a company need access to different product categories.
+
+1. **Navigate to Company Role Management**
+   - Go to your company's role management page (typically found in the company account section)
+   - Click **Edit** on an existing role or create a new role
+
+2. **Configure Organization Group Settings**
+   - Scroll to the **Organization Group Settings** section
+   - **Select Categories**: Choose which categories this role can access
+     - The category list displays in a tree format showing parent-child relationships
+     - Use Ctrl (Windows) or Cmd (Mac) to select multiple categories
+     - The tree structure makes it easy to see which categories belong to which parent category
+   - **Set Status**: Choose whether this organization group is Enabled or Disabled
+   - **Role Supervisor**: Toggle this switch to mark the role as an admin role (Role Supervisor)
+
+3. **Save the Role**
+   - Click **Save** to store your organization group settings
+   - The system automatically links the organization group data to the company role
+
+4. **What Happens Next**
+   - When users with this role log in, they'll only see products from the selected categories
+   - If a role is marked as a Role Supervisor, it receives admin-level permissions
+   - Disabled organization groups prevent access even if categories are selected
+
+**Example**: If you create a "Purchasing Manager" role and select "Electronics > Computers" and "Electronics > Phones" categories, users with this role will only see products in those specific categories when browsing the store.
+
 ### Import/Export Segments
 
 The module supports CSV import/export for bulk segment management:
@@ -323,9 +365,45 @@ segment_id,name,is_active,website_id,group
 - Check Magento logs: `var/log/system.log` and `var/log/exception.log`
 - Ensure required columns are present in CSV
 
+#### 6. Organization Group Settings Not Appearing
+
+**Symptoms**: Organization Group Settings section not visible when editing company roles
+
+**Solutions**:
+- Run `bin/magento setup:upgrade` to apply database schema changes
+- Clear cache: `bin/magento cache:flush`
+- Verify you're logged in as a company administrator
+- Check that the Magento Company module is enabled
+- Ensure you're on the correct company role edit page
+
+#### 7. Categories Not Displaying in Tree Format
+
+**Symptoms**: Categories appear as a flat list instead of a tree structure
+
+**Solutions**:
+- Clear browser cache and refresh the page
+- Verify static content is deployed: `bin/magento setup:static-content:deploy -f`
+- Check that categories have proper parent-child relationships in the catalog
+- Clear Magento cache: `bin/magento cache:flush`
+
 ## Changelog
 
-### Version 2.0.0 (Current)
+### Version 2.1.0 (Current)
+
+#### New Features
+
+- **Organization Group Management**: Link organization groups directly to company roles for better access control
+- **Category Tree Display**: Visual tree structure shows parent-child category relationships, making it easier to understand the catalog hierarchy
+- **Role Supervisor Feature**: Toggle to designate company roles as admin roles with enhanced permissions
+- **Company Role Integration**: Seamless integration with Magento Company module - organization group settings appear directly in the company role edit form
+- **Automatic Data Management**: Organization group data automatically saves when company roles are saved, and automatically deletes when roles are removed
+
+#### Enhanced Features
+
+- **Improved Category Selection**: Category dropdown now displays in a tree format with visual indicators (├──, └──) showing parent-child relationships
+- **Better User Experience**: Clear visual hierarchy helps administrators understand which categories belong to which parent categories
+
+### Version 2.0.0
 
 #### Added Features
 

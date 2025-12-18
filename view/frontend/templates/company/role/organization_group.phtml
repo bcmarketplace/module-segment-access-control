@@ -1,0 +1,121 @@
+<?php
+/**
+ * Copyright © 2024 BCMarketplace. All rights reserved.
+ * See COPYING.txt for license details.
+ *
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \BCMarketplace\SegmentAccessControl\ViewModel\Company\Role\OrganizationGroup $viewModel
+ */
+$viewModel = $block->getData('view_model');
+$roleId = $viewModel->getRoleId();
+$organizationGroup = $viewModel->getOrganizationGroup();
+$categories = $viewModel->getCategories();
+$selectedCategoryIds = $organizationGroup ? explode(',', $organizationGroup->getCategoryIds() ?? '') : [];
+$status = $organizationGroup ? (int)$organizationGroup->getStatus() : 1;
+$isAdmin = $organizationGroup ? (int)$organizationGroup->getIsAdmin() : 0;
+?>
+<div class="organization-group-section" data-role="organization-group-section">
+    <fieldset class="fieldset">
+        <legend class="legend">
+            <span><?= $block->escapeHtml(__('Organization Group Settings')) ?></span>
+        </legend>
+        <div class="field category_ids">
+            <label class="label" for="category_ids">
+                <span><?= $block->escapeHtml(__('Categories')) ?></span>
+            </label>
+            <div class="control">
+                <select name="category_ids[]" 
+                        id="category_ids" 
+                        multiple="multiple" 
+                        size="15"
+                        class="multiselect admin__control-multiselect category-tree-select"
+                        data-role="category-multiselect"
+                        style="font-family: 'Courier New', monospace; font-size: 13px;">
+                    <?php foreach ($categories as $category): ?>
+                        <option value="<?= $block->escapeHtml($category['value']) ?>"
+                                data-level="<?= (int)$category['level'] ?>"
+                                <?= in_array($category['value'], $selectedCategoryIds) ? 'selected="selected"' : '' ?>>
+                            <?= $block->escapeHtml($category['label']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+                <div class="note">
+                    <?= $block->escapeHtml(__('Select multiple categories associated with this role. The tree structure shows parent-child relationships. Hold Ctrl/Cmd to select multiple.')) ?>
+                </div>
+            </div>
+        </div>
+        <div class="field status">
+            <label class="label" for="status">
+                <span><?= $block->escapeHtml(__('Organization Group Status')) ?></span>
+            </label>
+            <div class="control">
+                <select name="status" id="status" class="select admin__control-select">
+                    <option value="1" <?= $status === 1 ? 'selected="selected"' : '' ?>>
+                        <?= $block->escapeHtml(__('Enabled')) ?>
+                    </option>
+                    <option value="0" <?= $status === 0 ? 'selected="selected"' : '' ?>>
+                        <?= $block->escapeHtml(__('Disabled')) ?>
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="field is_admin">
+            <label class="label" for="is_admin">
+                <span><?= $block->escapeHtml(__('Role Supervisor')) ?></span>
+            </label>
+            <div class="control">
+                <div class="admin__actions-switch" data-role="switcher">
+                    <input type="checkbox" 
+                           name="is_admin" 
+                           id="is_admin" 
+                           value="1"
+                           class="admin__actions-switch-checkbox"
+                           <?= $isAdmin === 1 ? 'checked="checked"' : '' ?>>
+                    <label class="admin__actions-switch-label" for="is_admin">
+                        <span class="admin__actions-switch-text" data-text-on="<?= $block->escapeHtml(__('Yes')) ?>" 
+                              data-text-off="<?= $block->escapeHtml(__('No')) ?>"></span>
+                    </label>
+                </div>
+                <div class="note">
+                    <?= $block->escapeHtml(__('Enable this toggle to set this role as an admin role (Role Supervisor).')) ?>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
+<script type="text/x-magento-init">
+{
+    "[data-role=switcher]": {
+        "Magento_Ui/js/form/element/single-checkbox-toggle": {
+            "targetSelector": "[data-role=organization-group-section]"
+        }
+    },
+    ".category-tree-select": {
+        "BCMarketplace_SegmentAccessControl/js/category-tree": {}
+    }
+}
+</script>
+<style>
+.category-tree-select option {
+    padding: 2px 5px;
+}
+.category-tree-select option[data-level="0"] {
+    font-weight: bold;
+}
+.category-tree-select option[data-level="1"] {
+    padding-left: 10px;
+}
+.category-tree-select option[data-level="2"] {
+    padding-left: 20px;
+}
+.category-tree-select option[data-level="3"] {
+    padding-left: 30px;
+}
+.category-tree-select option[data-level="4"] {
+    padding-left: 40px;
+}
+.category-tree-select option[data-level="5"] {
+    padding-left: 50px;
+}
+</style>
+

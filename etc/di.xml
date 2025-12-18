@@ -90,4 +90,12 @@
             type="BCMarketplace\SegmentAccessControl\Plugin\OpenSearch\MapperPlugin"
             sortOrder="10"/>
     </type>
+    <type name="Magento\Company\Api\RoleRepositoryInterface">
+        <plugin 
+            name="organization_group_role_repository" 
+            type="BCMarketplace\SegmentAccessControl\Plugin\Company\RoleRepositoryPlugin"
+            sortOrder="10"/>
+    </type>
+    <preference for="BCMarketplace\SegmentAccessControl\Api\Data\OrganizationGroupInterface" 
+                type="BCMarketplace\SegmentAccessControl\Model\OrganizationGroup" />
 </config>

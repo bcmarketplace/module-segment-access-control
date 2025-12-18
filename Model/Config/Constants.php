@@ -37,6 +37,12 @@ class Constants
     public const COLUMN_NAME = 'name';
     public const COLUMN_WEBSITE_ID = 'website_id';
     public const COLUMN_GROUP = 'group';
+    public const COLUMN_COMPANY_ROLE_ID = 'company_role_id';
+    public const COLUMN_CATEGORY_IDS = 'category_ids';
+    public const COLUMN_STATUS = 'status';
+    public const COLUMN_IS_ADMIN = 'is_admin';
+    public const COLUMN_COMPANY_ID = 'company_id';
+    public const COLUMN_COMPANY_ADMIN_ID = 'company_admin_id';
     public const COLUMN_CREATION_TIME = 'creation_time';
     public const COLUMN_UPDATE_TIME = 'update_time';
     public const COLUMN_CATEGORY_ID = 'category_id';

@@ -12,11 +12,21 @@
                 comment="Entity ID"/>
         <column xsi:type="smallint" name="is_active" unsigned="false" nullable="false" identity="false"
                 default="1" comment="Is Segment Active"/>
-        <column xsi:type="varchar" name="name" nullable="false" length="255" comment="Segment Name"/>
         <column xsi:type="smallint" name="website_id" unsigned="true" nullable="false" identity="false"
                 comment="Segment Store"/>
         <column xsi:type="smallint" name="group" unsigned="true" nullable="false" identity="false"
                 comment="Customer Group"/>
+        <column xsi:type="smallint" name="company_role_id" unsigned="true" nullable="true" identity="false"
+                comment="Company Role ID"/>
+        <column xsi:type="varchar" name="category_ids" nullable="true" length="255" comment="Comma Separated Category IDs"/>
+        <column xsi:type="smallint" name="status" unsigned="false" nullable="false" identity="false"
+                default="1" comment="Status (1=Enabled, 0=Disabled)"/>
+        <column xsi:type="smallint" name="is_admin" unsigned="false" nullable="false" identity="false"
+                default="0" comment="Is Admin (1=Admin, 0=Non-Admin)"/>
+        <column xsi:type="int" name="company_id" unsigned="true" nullable="true" identity="false"
+                comment="Company ID"/>
+        <column xsi:type="int" name="company_admin_id" unsigned="true" nullable="true" identity="false"
+                comment="Company Admin Customer ID"/>
         <column xsi:type="timestamp" name="creation_time" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
                 comment="Segment Creation Time"/>
         <column xsi:type="timestamp" name="update_time" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
@@ -24,6 +34,12 @@
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="segment_id"/>
         </constraint>
+        <constraint xsi:type="foreign" referenceId="BCMARKETPLACE_SEGMENT_ENTITY_COMPANY_ID_COMPANY_ENTITY_ID"
+                    table="bcmarketplace_segment_entity" column="company_id"
+                    referenceTable="company" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="BCMARKETPLACE_SEGMENT_ENTITY_COMPANY_ADMIN_ID_CUSTOMER_ENTITY_ID"
+                    table="bcmarketplace_segment_entity" column="company_admin_id"
+                    referenceTable="customer_entity" referenceColumn="entity_id" onDelete="CASCADE"/>
     </table>
     <table name="company_advanced_customer_entity">
         <column xsi:type="varchar" name="segment_approval" nullable="true"  comment="Segment Approval" />
