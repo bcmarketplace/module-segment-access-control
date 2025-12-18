@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">segment_manage_form.segment_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Segment Information</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="save" class="BCMarketplace\SegmentAccessControl\Block\Adminhtml\Manage\Edit\SaveButton"/>
+            <button name="delete" class="BCMarketplace\SegmentAccessControl\Block\Adminhtml\Manage\Edit\DeleteButton"/>
+            <button name="back" class="BCMarketplace\SegmentAccessControl\Block\Adminhtml\Manage\Edit\BackButton"/>
+        </buttons>
+        <namespace>segment_manage_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>segment_manage_form.segment_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="segment_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="segment/manage/save"/>
+        </settings>
+        <dataProvider class="BCMarketplace\SegmentAccessControl\Model\DataProvider" name="segment_form_data_source">
+            <settings>
+                <requestFieldName>segment_id</requestFieldName>
+                <primaryFieldName>segment_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general">
+        <settings>
+            <label/>
+        </settings>
+        <field name="segment_id" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">manage</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+                <dataScope>segment_id</dataScope>
+            </settings>
+        </field>
+        <field name="is_active" sortOrder="10" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">manage</item>
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Enable Segment</label>
+                <dataScope>is_active</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="name" sortOrder="20" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">segment</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Segment Name</label>
+                <dataScope>name</dataScope>
+            </settings>
+        </field>
+        <field name="group" sortOrder="30" formElement="select">
+            <settings>
+                <label translate="true">Customer Group</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>number</dataType>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\Customer\Model\Customer\Source\GroupSourceInterface"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="website_id" sortOrder="40" component="Magento_Customer/js/form/element/website" formElement="select">
+            <settings>
+                <label translate="true">Associate to Website</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>number</dataType>
+                <tooltip>
+                    <description translate="true">If your Magento installation has multiple websites, you can edit the scope to associate the customer with a specific site.</description>
+                </tooltip>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\Customer\ViewModel\Customer\Website"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+    </fieldset>
+</form>

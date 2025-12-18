@@ -1,0 +1,22 @@
+{
+    "bcmarketplace_segment_entity": {
+        "column": {
+            "segment_id": true,
+            "is_active": true,
+            "name": true,
+            "website_id": true,
+            "group": true,
+            "creation_time": true,
+            "update_time": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "company_advanced_customer_entity": {
+        "column": {
+            "segment_approval": true,
+            "segment_filter": true
+        }
+    }
+}

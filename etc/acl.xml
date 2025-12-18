@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2024 BCMarketplace. All rights reserved.
+ * See COPYING.txt for license details.
+ **/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Backend::content">
+                    <resource id="Magento_Backend::content_elements">
+                        <resource id="BCMarketplace_SegmentAccessControl::segment" title="Segments" translate="name" sortOrder="10">
+                            <resource id="BCMarketplace_SegmentAccessControl::save" title="Save Segment" translate="name" sortOrder="10"/>
+                            <resource id="BCMarketplace_SegmentAccessControl::segment_delete" title="Delete Segment" translate="name" sortOrder="20" />
+                        </resource>
+                    </resource>
+                </resource>
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="BCMarketplace_SegmentAccessControl::config_segment" title="Segment Management" translate="title" />
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

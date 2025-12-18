@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+   <preference for="Magento\Company\Model\ResourceModel\Company\Collection" type="BCMarketplace\SegmentAccessControl\Model\ResourceModel\Company\Collection"/>
+    <type name="Magento\Company\Model\Action\Customer\Populator">
+        <plugin name="SegmentPopulate" type="BCMarketplace\SegmentAccessControl\Plugin\Populator" sortOrder="1" />
+    </type>
+    <preference for="Magento\CatalogPermissions\Model\ResourceModel\Permission\Index" type="BCMarketplace\SegmentAccessControl\Model\ResourceModel\Permission\Index" />
+    <preference for="Magento\CatalogPermissions\Observer\ApplyCategoryPermissionOnLoadCollectionObserver" type="BCMarketplace\SegmentAccessControl\Observer\ApplyCategoryPermissionOnLoadCollectionObserverPlugin" />
+    <preference for="Magento\CatalogPermissions\Observer\ApplyCategoryPermissionObserver" type="BCMarketplace\SegmentAccessControl\Observer\ApplyCategoryPermissionObserverPlugin" />
+    <preference for="Magento\CatalogPermissions\Observer\ApplyPermissionsOnProduct" type="BCMarketplace\SegmentAccessControl\Observer\ApplyPermissionsOnProductObserverPlugin" />
+</config>

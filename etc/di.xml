@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2024 BCMarketplace. All rights reserved.
+ * See COPYING.txt for license details.
+ **/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="BCMarketplace\SegmentAccessControl\Api\Data\ManageSearchResultsInterface"
+                type="BCMarketplace\SegmentAccessControl\Model\ManageSearchResults" />
+    <preference for="BCMarketplace\SegmentAccessControl\Api\Data\ManageInterface" type="BCMarketplace\SegmentAccessControl\Model\Manage" />
+    <preference for="BCMarketplace\SegmentAccessControl\Api\ManageRepositoryInterface" type="BCMarketplace\SegmentAccessControl\Model\ManageRepository\ValidationComposite" />
+    <preference for="Magento\CatalogPermissions\Plugin\Theme\Block\Html\Topmenu" type="BCMarketplace\SegmentAccessControl\Plugin\Theme\Block\Html\Topmenu" />
+    <preference for="Amasty\MegaMenuLite\ViewModel\Tree" type="BCMarketplace\SegmentAccessControl\ViewModel\PluginTree" />
+    <preference for="Magento\NegotiableQuote\Model\Plugin\Customer\Model\CustomerRepository"
+                type="BCMarketplace\SegmentAccessControl\Plugin\NegotiableQuote\Customer\Model\CustomerRepository" />
+    <preference for="Magento\CatalogPermissions\Plugin\Sales\CustomerData\CheckCatalogPermissionAfterLastOrderedItemsPlugin"
+                type="BCMarketplace\SegmentAccessControl\Plugin\Sales\CustomerData\CheckCatalogPermissionAfterLastOrderedItemsPlugin" />
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="segment_manage_listing_data_source" xsi:type="string">BCMarketplace\SegmentAccessControl\Model\ResourceModel\Manage\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="BCMarketplace\SegmentAccessControl\Model\Api\SearchCriteria\ManageCollectionProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="sorting" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\SortingProcessor</item>
+                <item name="pagination" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\PaginationProcessor</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="BCMarketplace\SegmentAccessControl\Model\ManageRepository">
+        <arguments>
+            <argument name="collectionProcessor" xsi:type="object">BCMarketplace\SegmentAccessControl\Model\Api\SearchCriteria\ManageCollectionProcessor</argument>
+            <argument name="hydrator" xsi:type="object">Magento\Framework\EntityManager\AbstractModelHydrator</argument>
+        </arguments>
+    </type>
+    <virtualType name="BCMarketplace\SegmentAccessControl\Model\ResourceModel\Manage\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">bcmarketplace_segment_entity</argument>
+            <argument name="resourceModel" xsi:type="string">BCMarketplace\SegmentAccessControl\Model\ResourceModel\Manage</argument>
+        </arguments>
+    </virtualType>
+    <type name="BCMarketplace\SegmentAccessControl\Model\ManageRepository\ValidationComposite">
+        <arguments>
+            <argument name="repository" xsi:type="object">BCMarketplace\SegmentAccessControl\Model\ManageRepository</argument>
+            <argument name="hydrator" xsi:type="object">Magento\Framework\EntityManager\AbstractModelHydrator</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\Model\Entity\RepositoryFactory">
+        <arguments>
+            <argument name="entities" xsi:type="array">
+                <item name="BCMarketplace\SegmentAccessControl\Api\Data\ManageInterface" xsi:type="string">BCMarketplace\SegmentAccessControl\Api\ManageRepositoryInterface</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\ImportExport\Model\Import\SampleFileProvider">
+        <arguments>
+            <argument name="samples" xsi:type="array">
+                <item name="segmentimport" xsi:type="string">BCMarketplace_SegmentAccessControl</item>
+                <item name="customergroupimport" xsi:type="string">BCMarketplace_SegmentAccessControl</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Customer\Api\CustomerRepositoryInterface">
+        <plugin
+            name="set_segment_filter"
+            type="BCMarketplace\SegmentAccessControl\Plugin\CustomerRepositoryPlugin" sortOrder="30"/>
+    </type>
+    <type name="Magento\CatalogSearch\Model\ResourceModel\Fulltext\Collection">
+        <plugin name="add_catalog_permissions_information" disabled="true" />
+        <plugin 
+            name="add_catalog_permissions_information_segment" 
+            type="BCMarketplace\SegmentAccessControl\Plugin\OpenSearch\AddCategoryPermissionsToFulltextCollection" 
+            sortOrder="20"/>
+    </type>
+    <type name="Magento\Catalog\Block\Product\ProductList\Toolbar">
+        <plugin name="update_toolbar_count" disabled="true" />
+        <plugin 
+            name="update_toolbar_count_segment" 
+            type="BCMarketplace\SegmentAccessControl\Plugin\Catalog\Product\List\Toolbar\UpdateToolbarCount"
+            sortOrder="20"/>
+    </type>
+    <type name="Magento\OpenSearch\SearchAdapter\Mapper">
+        <plugin 
+            name="opensearch_mapper_segment" 
+            type="BCMarketplace\SegmentAccessControl\Plugin\OpenSearch\MapperPlugin"
+            sortOrder="10"/>
+    </type>
+</config>

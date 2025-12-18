@@ -1,0 +1,48 @@
+{
+  "name": "bcmarketplace/module-segment-access-control",
+  "description": "Segment-based access control for customers with catalog permissions. Provides fine-grained access control to catalog products and categories based on customer segments.",
+  "type": "magento2-module",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Raphael Baako",
+      "email": "rbaako@baakoconsultingllc.com",
+      "homepage": "https://baakoconsultingllc.com",
+      "role": "Senior Architect"
+    }
+  ],
+  "version": "2.0.0",
+  "require": {
+    "php": "~8.1.0||~8.2.0||~8.3.0",
+    "magento/framework": ">=103.0.0",
+    "bcmarketplace/module-base": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5.0",
+    "magento/magento-coding-standard": "*"
+  },
+  "suggest": {
+    "magento/module-catalog-permissions": "Required for catalog permission functionality",
+    "magento/module-company": "Required for company customer management",
+    "magento/module-import-export": "Required for segment import/export functionality"
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "BCMarketplace\\SegmentAccessControl\\": ""
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+    "map": [
+      [
+        "*",
+        "BCMarketplace/SegmentAccessControl"
+      ]
+    ]
+  }
+}

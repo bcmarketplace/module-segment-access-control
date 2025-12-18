@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2024 BCMarketplace. All rights reserved.
+ * See COPYING.txt for license details.
+ **/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="BCMarketplace_SegmentAccessControl::segment_access_control" title="Segment Access Control" module="BCMarketplace_SegmentAccessControl" sortOrder="200" dependsOnModule="BCMarketplace_SegmentAccessControl" parent="Magento_Customer::customer" action="segment/manage" resource="BCMarketplace_SegmentAccessControl::segment_access_control"/>
+    </menu>
+</config>

@@ -1,0 +1,4 @@
+segment_id,is_active,name,website_id,group
+1,1,"Tactical Segment",7,12
+2,1,"Investigations Segment",7,13
+3,1,"RR Segment",7,14

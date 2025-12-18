@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2024 BCMarketplace. All rights reserved.
+ * See COPYING.txt for license details.
+ **/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Cache/etc/cache.xsd">
+    <type name="segment_access_control" translate="label,description" instance="Magento\Framework\Cache\Frontend\Decorator\TagScope">
+        <label>Segment Access Control</label>
+        <description>Cache for segment collections and permissions</description>
+    </type>
+</config>
+

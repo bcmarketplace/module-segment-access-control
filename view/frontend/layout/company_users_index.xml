@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance dc" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <referenceBlock name="company.management.dialog.customer.add">
+        <action method="setTemplate" ifconfig="segment/general/enabled">
+            <argument name="template" xsi:type="string">BCMarketplace_SegmentAccessControl::company/management/dialog/customer/add.phtml</argument>
+        </action>
+        <arguments>
+            <argument name="segmentModel" xsi:type="object">BCMarketplace\SegmentAccessControl\ViewModel\Segment</argument>
+        </arguments>
+        <block class="Magento\CustomerCustomAttributes\Block\Form" template="Magento_CustomerCustomAttributes::form/userattributes.phtml" name="customer_form_user_attributes_create">
+            <action method="setFormCode">
+                <argument name="code" xsi:type="string">customer_account_create</argument>
+            </action>
+            <action method="setEntityModelClass">
+                <argument name="code" xsi:type="string">Magento\Customer\Model\Customer</argument>
+            </action>
+            <arguments>
+                <argument name="view_model" xsi:type="object">CustomerFileAttribute</argument>
+            </arguments>
+        </block>
+        <block class="Magento\CustomerCustomAttributes\Block\Form" template="Magento_CustomerCustomAttributes::form/userattributes.phtml" name="customer_form_user_attributes_edit" cacheable="false">
+            <action method="setFormCode">
+                <argument name="code" xsi:type="string">customer_account_edit</argument>
+            </action>
+            <action method="setEntityModelClass">
+                <argument name="code" xsi:type="string">Magento\Customer\Model\Customer</argument>
+            </action>
+            <arguments>
+                <argument name="view_model" xsi:type="object">CustomerFileAttribute</argument>
+            </arguments>
+        </block>
+    </referenceBlock>
+</page>
